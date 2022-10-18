@@ -12,6 +12,7 @@ permissions:
 env:
   AZURE_RESOURCE_GROUP: xeniel
   AZURE_LOCATION: westeurope
+  AZURE_MANAGED_BY: "moim.hossain@microsoft.com"
 
 jobs:
   build:    
@@ -29,19 +30,19 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }} 
           enable-AzPSSession: false
 
-      - name: Azure CLI Action
+      - name: Provision Resource Group
         uses: Azure/cli@v1
         with:
-          inlineScript: az group create --name ${{ env.AZURE_RESOURCE_GROUP }} --location ${{ env.AZURE_LOCATION }} --tags Purpose=Demo Production=NO --managed-by "moim.hossain@microsoft.com"
+          inlineScript: az group create --name ${{ env.AZURE_RESOURCE_GROUP }} --location ${{ env.AZURE_LOCATION }} --tags Purpose=Demo Production=NO --managed-by ${{ env.AZURE_MANAGED_BY }}
 
-#      - name: Deploy Azure Resource Manager (ARM) Template
-#        uses: Azure/arm-deploy@main
-#        with:
-#          scope: resourcegroup
-#          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-#          resourceGroupName: ${{ env.AZURE_RESOURCE_GROUP }}
-#          template: ./Infrastructure/main.bicep
-#          parameters: 'appName=${{ env.AZURE_WEBAPP_NAME }}' 
+      - name: Deploy Bicep Template
+        uses: Azure/arm-deploy@main
+        with:
+          scope: resourcegroup
+          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          resourceGroupName: ${{ env.AZURE_RESOURCE_GROUP }}
+          template: ./Infrastructure/main.bicep
+          parameters: ''  # 'appName=${{ env.AZURE_WEBAPP_NAME }}'
           
    
 
