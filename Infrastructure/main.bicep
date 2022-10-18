@@ -19,7 +19,7 @@ param keyvaultName string = 'xeniels-keyvault-alpha'
 param uamiName string = 'xeniel-app-identity'
 param signalRKeyName string = 'SignalRConnectionString'
 
-param computerVisionAccountName string = 'xenielscomputervision01'
+param computerVisionAccountName string = 'xenielscomputvision'
 param KV_CVAccountKyName string = 'ComputerVisionKey'
 param KV_CVAccountEdnpointName string = 'ComputerVisionEdnpoint'
 
