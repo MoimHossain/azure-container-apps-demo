@@ -97,7 +97,9 @@ app.MapPost(ConfigSettings.Route, async c => {
             Console.WriteLine();
         }
 
+        Console.WriteLine($"######## Notifying xeniel-frontend");
         await daprClient.InvokeMethodAsync("xeniel-frontend", "notify", results);
+        Console.WriteLine($"######## Done processing");
     }
     c.Response.StatusCode = 200;
 });

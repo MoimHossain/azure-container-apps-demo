@@ -92,7 +92,7 @@ module jobListenerApp 'modules/httpApp.bicep' = {
   params: {    
     location: location
     containerAppName: appNameJobListener
-    containerImage: 'moimhossain/xeniel-listener:v2'
+    containerImage: 'moimhossain/xeniel-listener:v3'
     containerPort: 80
     containerRegistry: ''
     containerRegistryUsername: ''
