@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32901.215
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobListener", "JobListener\JobListener.csproj", "{7C847576-5FCF-49AF-B3A6-A5A51B78E13C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XenielFrontend", "XenielFrontend\XenielFrontend.csproj", "{6AAD7476-0FCB-4B07-869F-673B9ECB54AA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7C847576-5FCF-49AF-B3A6-A5A51B78E13C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C847576-5FCF-49AF-B3A6-A5A51B78E13C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C847576-5FCF-49AF-B3A6-A5A51B78E13C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C847576-5FCF-49AF-B3A6-A5A51B78E13C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AAD7476-0FCB-4B07-869F-673B9ECB54AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AAD7476-0FCB-4B07-869F-673B9ECB54AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AAD7476-0FCB-4B07-869F-673B9ECB54AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AAD7476-0FCB-4B07-869F-673B9ECB54AA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B5E20B99-7548-42A2-BED3-F2951479235A}
+	EndGlobalSection
+EndGlobal

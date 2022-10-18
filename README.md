@@ -1,2 +1,3 @@
-# azure-container-apps-demo
-A demo that shows some capabilities of Azure Container Apps, Dapr and Cognitive service (image recognition)
+# Support for Azure Container Apps
+
+This folder container artifacts that enables the same solution to run on Azure container apps instead of AKS.
