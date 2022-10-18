@@ -15,7 +15,7 @@ param serviceBusTopicName string = 'xeniel-tpic'
 param serviceBusTopicSubName string = 'xeniel-tpic-frontend'
 param signalRName string = 'xenielsignalr'
 
-param keyvaultName string = 'xeniels-keyvault-01'
+param keyvaultName string = 'xeniels-keyvault-alpha'
 param uamiName string = 'xeniel-app-identity'
 param signalRKeyName string = 'SignalRConnectionString'
 

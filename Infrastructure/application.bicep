@@ -2,7 +2,7 @@ targetScope = 'resourceGroup'
 
 param location string = resourceGroup().location
 param acaEnvName string = 'xeniel-aca-environment'
-param keyvaultName string = 'xeniels-keyvault-01'
+param keyvaultName string = 'xeniels-keyvault-alpha'
 param uamiName string = 'xeniel-app-identity'
 // param storageAccountName string = 'xenielstorageacc001'
 // param storageQueueName string = 'xeniels'
