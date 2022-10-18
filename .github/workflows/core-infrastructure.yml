@@ -1,4 +1,4 @@
-name: Provision or update core infrastructure on Azure
+name: Infrastructure
 on:
   push:
     branches: [ main ]
