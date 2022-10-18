@@ -11,6 +11,7 @@ permissions:
     
 env:
   AZURE_RESOURCE_GROUP: xeniel
+  AZURE_LOCATION: westeurope
 
 jobs:
   build:    
@@ -31,7 +32,7 @@ jobs:
       - name: Azure CLI Action
         uses: Azure/cli@v1
         with:
-          inlineScript: az group list -o table
+          inlineScript: az group create --name ${{ env.AZURE_RESOURCE_GROUP }} --location ${{ env.AZURE_LOCATION }} --tags Purpose=Demo Production=NO --managed-by "moim.hossain@microsoft.com"
 
 #      - name: Deploy Azure Resource Manager (ARM) Template
 #        uses: Azure/arm-deploy@main
