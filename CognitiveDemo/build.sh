@@ -5,7 +5,7 @@ RegistryName=$2
 
 echo "Building Images with Tag $ImageTag"
 
-az acr login --name RegistryName
+az acr login --name $RegistryName
 
 docker build -t $RegistryName/job-listener:$ImageTag -f ${PWD}/CognitiveDemo/JobListener/Dockerfile ${PWD}/CognitiveDemo/JobListener  
 
