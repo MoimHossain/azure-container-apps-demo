@@ -1,7 +1,7 @@
 #!/bin/bash
 # This script builds the CognitiveDemo project.
-ImageTag="CognitiveDemo"
-RegistryName="xenielscontainerregistry.azurecr.io"
+ImageTag=$1
+RegistryName=$2
 
 echo "Building Images with Tag $ImageTag"
 

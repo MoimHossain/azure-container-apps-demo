@@ -44,9 +44,10 @@ jobs:
 
 
       - name: Building container images
-        run: ${PWD}/CognitiveDemo/build.sh
+        run: ${PWD}/CognitiveDemo/build.sh $ImageTag
         env:
           ImageTag: GAGA
+          RegistryName: "xenielscontainerregistry.azurecr.io"
 
 
       # - name: Deploy Bicep Template
