@@ -44,7 +44,7 @@ jobs:
 
 
       - name: Building container images
-        run: ${PWD}/CognitiveDemo/build.sh $ImageTag
+        run: ${PWD}/CognitiveDemo/build.sh $ImageTag $RegistryName
         env:
           ImageTag: GAGA
           RegistryName: "xenielscontainerregistry.azurecr.io"
