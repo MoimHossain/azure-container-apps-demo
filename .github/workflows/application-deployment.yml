@@ -40,11 +40,12 @@ jobs:
       - name: Building container images
         run: ${PWD}/CognitiveDemo/build.sh $ImageTag $RegistryName
         env:
-          ImageTag: GAGA
+          ImageTag: ${GITHUB_SHA::6}
           RegistryName: "xenielscontainerregistry.azurecr.io"
       - name: Azure logout
         run: az logout
-  deploy-containers:    
+  deploy-containers: 
+    needs: build-container-images   
     runs-on: ubuntu-latest    
     steps:      
       - uses: actions/checkout@v2      
@@ -62,6 +63,6 @@ jobs:
           subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           resourceGroupName: ${{ env.AZURE_RESOURCE_GROUP }}
           template: ./Infrastructure/application.bicep
-          parameters: ''  # 'appName=${{ env.AZURE_WEBAPP_NAME }}'
+          parameters: 'tagName=${GITHUB_SHA::6}'
       - name: Azure logout
         run: az logout        
