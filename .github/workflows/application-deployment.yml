@@ -30,11 +30,10 @@ jobs:
     runs-on: ubuntu-latest    
     steps:      
       - uses: actions/checkout@v2
-      - name: Set outputs
-        id: vars
-        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
-      - name: Check outputs
-        run: echo ${{ steps.vars.outputs.sha_short }}
+      - uses: benjlevesque/short-sha@v2
+        id: short-sha
+        with:
+          length: 6
       
       - name: OIDC Login to Azure 
         uses: azure/login@v1
@@ -46,7 +45,7 @@ jobs:
       - name: Building container images
         run: ${PWD}/CognitiveDemo/build.sh $ImageTag $RegistryName
         env:
-          ImageTag: ${{ env.GITHUB_SHA }}
+          ImageTag: ${{ steps.short-sha.outputs.sha }}
           RegistryName: "xenielscontainerregistry.azurecr.io"
       - name: Azure logout
         run: az logout
