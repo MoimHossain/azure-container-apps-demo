@@ -11,8 +11,8 @@ on:
         - info
         - warning
         - debug
-  # push:
-  #   branches: [ main ]
+  push:
+    branches: [ main ]
   # pull_request:
   #   branches: [ main ]
 
@@ -40,6 +40,11 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }} 
           enable-AzPSSession: false
+
+      - name: Building container imagesx
+        run: ls ${PWD}
+        env:
+          ImageTag: GAGA
 
       - name: Building container images
         run: ${PWD}/CognitiveDemo/build.bash
