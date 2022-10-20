@@ -30,10 +30,8 @@ jobs:
     runs-on: ubuntu-latest    
     steps:      
       - uses: actions/checkout@v2
-      - uses: benjlevesque/short-sha@v2
-        id: short-sha
-        with:
-          length: 6
+      - uses: tenhaus/get-release-or-tag@v2
+        id: tag
       
       - name: OIDC Login to Azure 
         uses: azure/login@v1
@@ -45,7 +43,7 @@ jobs:
       - name: Building container images
         run: ${PWD}/CognitiveDemo/build.sh $ImageTag $RegistryName
         env:
-          ImageTag: ${{ steps.short-sha.outputs.sha }}
+          ImageTag: ${{ steps.tag.outputs.tag }}
           RegistryName: "xenielscontainerregistry.azurecr.io"
       - name: Azure logout
         run: az logout
