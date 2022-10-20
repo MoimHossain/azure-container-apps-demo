@@ -5,9 +5,6 @@ param location string = resourceGroup().location
 param acaEnvName string = 'xeniel-aca-environment'
 param keyvaultName string = 'xeniels-keyvault-alpha'
 param uamiName string = 'xeniel-app-identity'
-// param storageAccountName string = 'xenielstorageacc001'
-// param storageQueueName string = 'xeniels'
-// param storageSecKeyName string = 'StorageKey'
 param serviceBusNamespace string = 'xenielservicebus'
 param signalRName string = 'xenielsignalr'
 param signalRHubName string = 'xeniels'
@@ -16,7 +13,6 @@ var appNameJobListener = 'xeniel-job-listener'
 var appNameFrontend = 'xeniel-frontend'
 
 var daprComponent_secretStore = 'xeniel-dapr-secret-store'
-//var daprComponent_storageQueueBinding = 'xeniel-dapr-storage-queue-binding'
 var daprComponent_serviceBusPubSub = 'xeniel-dapr-servicebus-pubsub'
 var daprComponent_signalRBinding = 'xeniel-dapr-signalr-binding'
 
@@ -39,24 +35,6 @@ module daprSecretStore 'modules/dapr/kv-secret-store.bicep' = {
     managedIdentityClientId: uami.properties.clientId
   }
 }
-
-// module daprStorageQueueBinding 'modules/dapr/storage-queue-binding.bicep' = {
-//   name: daprComponent_storageQueueBinding
-//   params: {
-//     acaEnvName: acaEnvironment.name
-//     appScopes: [
-//       testAppName
-//     ]
-//     componentName: daprComponent_storageQueueBinding 
-//     storagekeySecKeyName: storageSecKeyName
-//     // Managed identity - didn't work so far
-//     //managedIdentityClientId: uami.properties.clientId
-//     // Azure KeyVault based secret store - didn't work for queue binding
-//     //secretStoreName: daprComponent_secretStore
-//     storageAccountName: storageAccountName
-//     queueName: storageQueueName
-//   }
-// }
 
 module daprServiceBusPubsub 'modules/dapr/service-bus-pubsub.bicep' = {
   name: daprComponent_serviceBusPubSub
@@ -92,7 +70,7 @@ module jobListenerApp 'modules/httpApp.bicep' = {
   name: appNameJobListener
   params: {    
     location: location    
-    containerAppName: appNameJobListener
+    containerAppName: appNameJobListener    
     environmentName: acaEnvName
     hasIdentity: true
     userAssignedIdentityName: uami.name
@@ -116,6 +94,7 @@ module frontendApp 'modules/httpApp.bicep' = {
     containerAppName: appNameFrontend
     environmentName: acaEnvName
     revisionMode: 'Multiple'
+    revisionSuffix: tagName
     hasIdentity: true
     userAssignedIdentityName: uami.name
     containerImage: '${containerRegistryName}.azurecr.io/frontend:${tagName}'
@@ -130,28 +109,3 @@ module frontendApp 'modules/httpApp.bicep' = {
     minReplicas: 1
   }
 }
-
-
-
-// module garbageApp 'modules/httpApp.bicep' = {
-//   name: 'xeniel-garbage'
-//   params: {    
-//     location: location
-//     containerAppName: 'xeniel-garbage'
-//     containerImage: 'xenielscontainerregistry.azurecr.io/samples/nginx:latest'
-//     containerPort: 80
-//     containerRegistry: 'xenielscontainerregistry.azurecr.io'
-//     isPrivateRegistry: true
-//     useManagedIdentityForImagePull: true
-//     containerRegistryUsername: ''
-//     registryPassword: ''
-
-//     enableIngress: true
-//     environmentName: acaEnvName
-//     isExternalIngress: true    
-    
-//     minReplicas: 1    
-//     hasIdentity: true
-//     userAssignedIdentityName: uami.name
-//   }
-// }

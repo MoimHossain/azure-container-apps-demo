@@ -1,5 +1,6 @@
 param containerAppName string
 param location string = resourceGroup().location
+param revisionSuffix string = uniqueString(resourceGroup().id)
 param environmentName string 
 param containerImage string
 param containerPort int
@@ -21,6 +22,8 @@ param env array = []
 param revisionMode string = 'Single'
 param hasIdentity bool
 param userAssignedIdentityName string
+
+var sanitizedRevisionSuffix = substring(revisionSuffix, 0, 10)
 
 resource uami 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' existing = {
   name: userAssignedIdentityName
@@ -70,6 +73,7 @@ resource containerApp 'Microsoft.App/containerApps@2022-03-01' = {
       }
     }
     template: {
+      revisionSuffix: sanitizedRevisionSuffix
       containers: [
         {
           image: containerImage
