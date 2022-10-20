@@ -66,6 +66,6 @@ jobs:
           subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           resourceGroupName: ${{ env.AZURE_RESOURCE_GROUP }}
           template: ./Infrastructure/application.bicep
-          parameters: 'tagName=${{ env.GITHUB_SHA }}'
+          parameters: 'tagName=c34acb0d76e2728dde8de3e5ae922fd4cbd9c3a7'
       - name: Azure logout
         run: az logout        
