@@ -40,7 +40,7 @@ jobs:
       - name: Building container images
         run: ${PWD}/CognitiveDemo/build.sh $ImageTag $RegistryName
         env:
-          ImageTag: ${{ GITHUB_SHA::6 }}
+          ImageTag: $GITHUB_SHA
           RegistryName: "xenielscontainerregistry.azurecr.io"
       - name: Azure logout
         run: az logout
@@ -63,6 +63,6 @@ jobs:
           subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           resourceGroupName: ${{ env.AZURE_RESOURCE_GROUP }}
           template: ./Infrastructure/application.bicep
-          parameters: 'tagName=${{ GITHUB_SHA::6 }}'
+          parameters: 'tagName=$GITHUB_SHA'
       - name: Azure logout
         run: az logout        
