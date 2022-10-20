@@ -115,6 +115,7 @@ module frontendApp 'modules/httpApp.bicep' = {
     location: location
     containerAppName: appNameFrontend
     environmentName: acaEnvName
+    revisionMode: 'Multiple'
     hasIdentity: true
     userAssignedIdentityName: uami.name
     containerImage: '${containerRegistryName}.azurecr.io/frontend:${tagName}'

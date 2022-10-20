@@ -14,6 +14,10 @@ param useManagedIdentityForImagePull bool = false
 param minReplicas int = 0
 param secrets array = []
 param env array = []
+@allowed([
+  'Single'
+  'Multiple'
+])
 param revisionMode string = 'Single'
 param hasIdentity bool
 param userAssignedIdentityName string
