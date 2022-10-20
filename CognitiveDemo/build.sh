@@ -9,4 +9,4 @@ docker build -t $RegistryName/job-listener:$imageTag -f ./JobListener/Dockerfile
 
 
 
-docker push -t $RegistryName/job-listener:$imageTag
+docker push $RegistryName/job-listener:$imageTag
