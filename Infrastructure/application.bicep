@@ -1,5 +1,6 @@
 targetScope = 'resourceGroup'
-
+param tagName string
+param containerRegistryName string = 'xenielscontainerregistry'
 param location string = resourceGroup().location
 param acaEnvName string = 'xeniel-aca-environment'
 param keyvaultName string = 'xeniels-keyvault-alpha'
@@ -92,9 +93,9 @@ module jobListenerApp 'modules/httpApp.bicep' = {
   params: {    
     location: location
     containerAppName: appNameJobListener
-    containerImage: 'moimhossain/xeniel-listener:v3'
+    containerImage: '${containerRegistryName}.azurecr.io/job-listener:${tagName}'
     containerPort: 80
-    containerRegistry: ''
+    containerRegistry: '${containerRegistryName}.azurecr.io'
     containerRegistryUsername: ''
     enableIngress: true
     environmentName: acaEnvName
@@ -103,6 +104,7 @@ module jobListenerApp 'modules/httpApp.bicep' = {
     registryPassword: ''
     minReplicas: 1    
     hasIdentity: true
+    useManagedIdentityForImagePull: true
     userAssignedIdentityName: uami.name
   }
 }
@@ -112,9 +114,9 @@ module frontendApp 'modules/httpApp.bicep' = {
   params: {    
     location: location
     containerAppName: appNameFrontend
-    containerImage: 'moimhossain/xeniel-frontend:v1'
+    containerImage: '${containerRegistryName}.azurecr.io/frontend:${tagName}'
     containerPort: 80
-    containerRegistry: ''
+    containerRegistry: '${containerRegistryName}.azurecr.io'
     containerRegistryUsername: ''
     enableIngress: true
     environmentName: acaEnvName
@@ -123,6 +125,7 @@ module frontendApp 'modules/httpApp.bicep' = {
     registryPassword: ''
     minReplicas: 1    
     hasIdentity: true
+    useManagedIdentityForImagePull: true
     userAssignedIdentityName: uami.name
   }
 }
