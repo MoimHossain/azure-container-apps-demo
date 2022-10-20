@@ -41,7 +41,8 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }} 
           enable-AzPSSession: false
 
-      - run: ./CognitiveDemo/build.bash
+      - name: Building container images
+        run: ${PWD}/CognitiveDemo/build.bash
         env:
           ImageTag: GAGA
 
