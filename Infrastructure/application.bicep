@@ -91,21 +91,21 @@ module daprSignalRBinding 'modules/dapr/signalR-binding.bicep' = {
 module jobListenerApp 'modules/httpApp.bicep' = {
   name: appNameJobListener
   params: {    
-    location: location
+    location: location    
     containerAppName: appNameJobListener
-    containerImage: '${containerRegistryName}.azurecr.io/job-listener:${tagName}'
-    containerPort: 80
-    containerRegistry: '${containerRegistryName}.azurecr.io'
-    containerRegistryUsername: ''
-    enableIngress: true
     environmentName: acaEnvName
-    isExternalIngress: false
-    isPrivateRegistry: false
-    registryPassword: ''
-    minReplicas: 1    
     hasIdentity: true
-    useManagedIdentityForImagePull: true
     userAssignedIdentityName: uami.name
+    containerImage: '${containerRegistryName}.azurecr.io/job-listener:${tagName}'
+    containerRegistry: '${containerRegistryName}.azurecr.io'
+    isPrivateRegistry: true
+    containerRegistryUsername: ''
+    registryPassword: ''    
+    useManagedIdentityForImagePull: true
+    containerPort: 80
+    enableIngress: true    
+    isExternalIngress: false
+    minReplicas: 1
   }
 }
 
@@ -114,24 +114,24 @@ module frontendApp 'modules/httpApp.bicep' = {
   params: {    
     location: location
     containerAppName: appNameFrontend
-    containerImage: '${containerRegistryName}.azurecr.io/frontend:${tagName}'
-    containerPort: 80
-    containerRegistry: '${containerRegistryName}.azurecr.io'
-    containerRegistryUsername: ''
-    enableIngress: true
     environmentName: acaEnvName
-    isExternalIngress: true
-    isPrivateRegistry: false
-    registryPassword: ''
-    minReplicas: 1    
     hasIdentity: true
-    useManagedIdentityForImagePull: true
     userAssignedIdentityName: uami.name
+    containerImage: '${containerRegistryName}.azurecr.io/frontend:${tagName}'
+    containerRegistry: '${containerRegistryName}.azurecr.io'
+    isPrivateRegistry: true
+    containerRegistryUsername: ''
+    registryPassword: ''    
+    useManagedIdentityForImagePull: true
+    containerPort: 80
+    enableIngress: true
+    isExternalIngress: true
+    minReplicas: 1
   }
 }
 
 
-// xenielscontainerregistry.azurecr.io/samples/nginx:latest 
+
 // module garbageApp 'modules/httpApp.bicep' = {
 //   name: 'xeniel-garbage'
 //   params: {    

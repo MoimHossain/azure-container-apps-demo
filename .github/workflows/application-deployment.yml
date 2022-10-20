@@ -31,8 +31,7 @@ jobs:
     steps:      
       - uses: actions/checkout@v2
       - uses: tenhaus/get-release-or-tag@v2
-        id: tag
-      
+        id: tag      
       - name: OIDC Login to Azure 
         uses: azure/login@v1
         with:
@@ -51,7 +50,9 @@ jobs:
     needs: build-container-images   
     runs-on: ubuntu-latest    
     steps:      
-      - uses: actions/checkout@v2      
+      - uses: actions/checkout@v2
+      - uses: tenhaus/get-release-or-tag@v2
+        id: tag      
       - name: OIDC Login to Azure 
         uses: azure/login@v1
         with:
@@ -66,6 +67,6 @@ jobs:
           subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           resourceGroupName: ${{ env.AZURE_RESOURCE_GROUP }}
           template: ./Infrastructure/application.bicep
-          parameters: 'tagName=c34acb0d76e2728dde8de3e5ae922fd4cbd9c3a7'
+          parameters: 'tagName=${{ steps.tag.outputs.tag }}'
       - name: Azure logout
         run: az logout        
