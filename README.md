@@ -4,6 +4,3 @@
 [![Deployment](https://github.com/MoimHossain/azure-container-apps-demo/actions/workflows/application-deployment.yml/badge.svg)](https://github.com/MoimHossain/azure-container-apps-demo/actions/workflows/application-deployment.yml)
 
 This folder container artifacts that enables the same solution to run on Azure container apps instead of AKS.
- 
- 
- # test
