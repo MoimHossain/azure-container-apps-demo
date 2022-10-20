@@ -11,10 +11,10 @@ on:
         - info
         - warning
         - debug
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  # push:
+  #   branches: [ main ]
+  # pull_request:
+  #   branches: [ main ]
 
 permissions:
       id-token: write
@@ -41,18 +41,19 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }} 
           enable-AzPSSession: false
 
+      - run: ./CognitiveDemo/build.bash
+        env:
+          ImageTag: GAGA
 
-      - name: Deploy Bicep Template
-        uses: Azure/arm-deploy@main
-        with:
-          scope: resourcegroup
-          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          resourceGroupName: ${{ env.AZURE_RESOURCE_GROUP }}
-          template: ./Infrastructure/application.bicep
-          parameters: ''  # 'appName=${{ env.AZURE_WEBAPP_NAME }}'
-          
-   
 
+      # - name: Deploy Bicep Template
+      #   uses: Azure/arm-deploy@main
+      #   with:
+      #     scope: resourcegroup
+      #     subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      #     resourceGroupName: ${{ env.AZURE_RESOURCE_GROUP }}
+      #     template: ./Infrastructure/application.bicep
+      #     parameters: ''  # 'appName=${{ env.AZURE_WEBAPP_NAME }}'
 
       - name: Azure logout
         run: az logout

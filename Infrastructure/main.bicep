@@ -23,6 +23,8 @@ param computerVisionAccountName string = 'xenielscomputvision'
 param KV_CVAccountKyName string = 'ComputerVisionKey'
 param KV_CVAccountEdnpointName string = 'ComputerVisionEdnpoint'
 
+param containerRegistryName string = 'xenielscontainerregistry'
+
 module uami 'modules/identity.bicep' = {
   name: uamiName
   params: {
@@ -31,122 +33,132 @@ module uami 'modules/identity.bicep' = {
   }
 }
 
-
-module keyvault 'modules/keyvault.bicep' = {
-  name: keyvaultName
+module containerRegistry  'modules/registry.bicep' = {
+  name: containerRegistryName
   params: {
-    keyVaultName: keyvaultName
-    objectId: uami.outputs.principalId
-    enabledForDeployment: false
-    enabledForDiskEncryption: false
-    enabledForTemplateDeployment: false
-    keysPermissions: [
-      'get'
-      'list'
-    ]
-    secretsPermissions: [
-      'get'
-      'list'
-    ]
     location: location
-    skuName: 'standard'  
+    registryName: containerRegistryName
+    skuName: 'Basic'
+    userAssignedIdentityPrincipalId: uami.outputs.principalId
+    adminUserEnabled: false
   }
 }
 
-
-
-module computerVision 'modules/computerVision.bicep' = {
-  name: computerVisionAccountName
-  params: {
-    accountEndpointKeyVaultKey: KV_CVAccountEdnpointName
-    accountKyVaultKy: KV_CVAccountKyName
-    accountName: computerVisionAccountName
-    identityPrincipalId: uami.outputs.principalId
-    keyVaultName: keyvault.name
-    location: location
-  }
-}
-
-
-module serviceBus 'modules/service-bus.bicep' = {
-  name: 'xenielservicebus'  
-  params: {
-    serviceBusNamespace: serviceBusNamespace
-    serviceBusTopicName: serviceBusTopicName
-    serviceBusTopicSubName: serviceBusTopicSubName
-    location: location
-    identityPrincipalId: uami.outputs.principalId
-  }
-}
-
-module storageAccount 'modules/storageAccount.bicep' = {
-  name: storageAccountName
-  params: {
-    accountName: storageAccountName
-    containerName: storageContainerName
-    queueName: storageQueueName
-    location: location
-    identityPrincipalId: uami.outputs.principalId
-    keyVaultName: keyvault.name
-    storageSecKeyName: storageSecKeyName
-    storageSecAccountName: storageSecAccountName
-    storageSecContainerName: storageSecContainerName
-  }
-}
-
-var eventGridTopicName = '${storageAccountName}-${serviceBusTopicName}-topic'
-module eventgridTopicToServiceBus 'modules/eventGridServiceBus.bicep' = {
-  name: eventGridTopicName
-  dependsOn: [
-    serviceBus
-    storageAccount
-  ]
-  params: {
-    eventGridSystemTopicName: eventGridTopicName 
-    location: location
-    serviceBusNamespace: serviceBus.outputs.namespace
-    serviceBusTopicName: serviceBus.outputs.topicName
-    storageAccountName: storageAccount.outputs.accountName
-  }
-}
-
-
-module signalR 'modules/signalr.bicep' = {
-  name: signalRName
-  params: {
-    signalRName: signalRName
-    location: location
-    keyVaultName: keyvault.name
-    signalRKeyName: signalRKeyName
-  }
-}
+// module keyvault 'modules/keyvault.bicep' = {
+//   name: keyvaultName
+//   params: {
+//     keyVaultName: keyvaultName
+//     objectId: uami.outputs.principalId
+//     enabledForDeployment: false
+//     enabledForDiskEncryption: false
+//     enabledForTemplateDeployment: false
+//     keysPermissions: [
+//       'get'
+//       'list'
+//     ]
+//     secretsPermissions: [
+//       'get'
+//       'list'
+//     ]
+//     location: location
+//     skuName: 'standard'  
+//   }
+// }
 
 
 
+// module computerVision 'modules/computerVision.bicep' = {
+//   name: computerVisionAccountName
+//   params: {
+//     accountEndpointKeyVaultKey: KV_CVAccountEdnpointName
+//     accountKyVaultKy: KV_CVAccountKyName
+//     accountName: computerVisionAccountName
+//     identityPrincipalId: uami.outputs.principalId
+//     keyVaultName: keyvault.name
+//     location: location
+//   }
+// }
 
-module logAnalytics 'modules/log-analytics.bicep' = {
-  name: logAnalyticsName
-  params: {
-    logAnalyticsName: logAnalyticsName
-    localtion: location
-  }
-}
 
-module appInsights 'modules/appInsights.bicep' = {
-  name: appInsightName
-  params: {
-    appInsightName: appInsightName
-    location: location
-    laWorkspaceId: logAnalytics.outputs.laWorkspaceId
-  }
-}
+// module serviceBus 'modules/service-bus.bicep' = {
+//   name: 'xenielservicebus'  
+//   params: {
+//     serviceBusNamespace: serviceBusNamespace
+//     serviceBusTopicName: serviceBusTopicName
+//     serviceBusTopicSubName: serviceBusTopicSubName
+//     location: location
+//     identityPrincipalId: uami.outputs.principalId
+//   }
+// }
 
-module acaEnvironment 'modules/environment.bicep' = {
-  name: acaEnvName
-  params: {
-    appInsightKey: appInsights.outputs.InstrumentationKey
-    location: location
-    envrionmentName: acaEnvName
-    laWorkspaceName: logAnalyticsName
-  }
-}
+// module storageAccount 'modules/storageAccount.bicep' = {
+//   name: storageAccountName
+//   params: {
+//     accountName: storageAccountName
+//     containerName: storageContainerName
+//     queueName: storageQueueName
+//     location: location
+//     identityPrincipalId: uami.outputs.principalId
+//     keyVaultName: keyvault.name
+//     storageSecKeyName: storageSecKeyName
+//     storageSecAccountName: storageSecAccountName
+//     storageSecContainerName: storageSecContainerName
+//   }
+// }
+
+// var eventGridTopicName = '${storageAccountName}-${serviceBusTopicName}-topic'
+// module eventgridTopicToServiceBus 'modules/eventGridServiceBus.bicep' = {
+//   name: eventGridTopicName
+//   dependsOn: [
+//     serviceBus
+//     storageAccount
+//   ]
+//   params: {
+//     eventGridSystemTopicName: eventGridTopicName 
+//     location: location
+//     serviceBusNamespace: serviceBus.outputs.namespace
+//     serviceBusTopicName: serviceBus.outputs.topicName
+//     storageAccountName: storageAccount.outputs.accountName
+//   }
+// }
+
+
+// module signalR 'modules/signalr.bicep' = {
+//   name: signalRName
+//   params: {
+//     signalRName: signalRName
+//     location: location
+//     keyVaultName: keyvault.name
+//     signalRKeyName: signalRKeyName
+//   }
+// }
+
+
+
+
+// module logAnalytics 'modules/log-analytics.bicep' = {
+//   name: logAnalyticsName
+//   params: {
+//     logAnalyticsName: logAnalyticsName
+//     localtion: location
+//   }
+// }
+
+// module appInsights 'modules/appInsights.bicep' = {
+//   name: appInsightName
+//   params: {
+//     appInsightName: appInsightName
+//     location: location
+//     laWorkspaceId: logAnalytics.outputs.laWorkspaceId
+//   }
+// }
+
+// module acaEnvironment 'modules/environment.bicep' = {
+//   name: acaEnvName
+//   params: {
+//     appInsightKey: appInsights.outputs.InstrumentationKey
+//     location: location
+//     envrionmentName: acaEnvName
+//     laWorkspaceName: logAnalyticsName
+//   }
+// }

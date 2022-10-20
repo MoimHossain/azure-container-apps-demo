@@ -10,6 +10,7 @@ param isPrivateRegistry bool
 param enableIngress bool 
 @secure()
 param registryPassword string
+param useManagedIdentityForImagePull bool = false
 param minReplicas int = 0
 param secrets array = []
 param env array = []
@@ -42,8 +43,9 @@ resource containerApp 'Microsoft.App/containerApps@2022-03-01' = {
       registries: isPrivateRegistry ? [
         {
           server: containerRegistry
-          username: containerRegistryUsername
-          passwordSecretRef: registryPassword
+          identity: useManagedIdentityForImagePull ? uami.id : null
+          username: useManagedIdentityForImagePull ? null : containerRegistryUsername
+          passwordSecretRef: useManagedIdentityForImagePull ? null : registryPassword
         }
       ] : null
       ingress: enableIngress ? {

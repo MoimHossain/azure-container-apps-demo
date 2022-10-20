@@ -128,3 +128,26 @@ module frontendApp 'modules/httpApp.bicep' = {
 }
 
 
+// xenielscontainerregistry.azurecr.io/samples/nginx:latest 
+// module garbageApp 'modules/httpApp.bicep' = {
+//   name: 'xeniel-garbage'
+//   params: {    
+//     location: location
+//     containerAppName: 'xeniel-garbage'
+//     containerImage: 'xenielscontainerregistry.azurecr.io/samples/nginx:latest'
+//     containerPort: 80
+//     containerRegistry: 'xenielscontainerregistry.azurecr.io'
+//     isPrivateRegistry: true
+//     useManagedIdentityForImagePull: true
+//     containerRegistryUsername: ''
+//     registryPassword: ''
+
+//     enableIngress: true
+//     environmentName: acaEnvName
+//     isExternalIngress: true    
+    
+//     minReplicas: 1    
+//     hasIdentity: true
+//     userAssignedIdentityName: uami.name
+//   }
+// }
