@@ -87,25 +87,25 @@ module jobListenerApp 'modules/httpApp.bicep' = {
   }
 }
 
-module frontendApp 'modules/httpApp.bicep' = {
-  name: appNameFrontend
-  params: {    
-    location: location
-    containerAppName: appNameFrontend
-    environmentName: acaEnvName
-    revisionMode: 'Multiple'
-    revisionSuffix: tagName
-    hasIdentity: true
-    userAssignedIdentityName: uami.name
-    containerImage: '${containerRegistryName}.azurecr.io/frontend:${tagName}'
-    containerRegistry: '${containerRegistryName}.azurecr.io'
-    isPrivateRegistry: true
-    containerRegistryUsername: ''
-    registryPassword: ''    
-    useManagedIdentityForImagePull: true
-    containerPort: 80
-    enableIngress: true
-    isExternalIngress: true
-    minReplicas: 1
-  }
-}
+// module frontendApp 'modules/httpApp.bicep' = {
+//   name: appNameFrontend
+//   params: {    
+//     location: location
+//     containerAppName: appNameFrontend
+//     environmentName: acaEnvName
+//     revisionMode: 'Multiple'
+//     revisionSuffix: tagName
+//     hasIdentity: true
+//     userAssignedIdentityName: uami.name
+//     containerImage: '${containerRegistryName}.azurecr.io/frontend:${tagName}'
+//     containerRegistry: '${containerRegistryName}.azurecr.io'
+//     isPrivateRegistry: true
+//     containerRegistryUsername: ''
+//     registryPassword: ''    
+//     useManagedIdentityForImagePull: true
+//     containerPort: 80
+//     enableIngress: true
+//     isExternalIngress: true
+//     minReplicas: 1
+//   }
+// }
