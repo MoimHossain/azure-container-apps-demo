@@ -24,6 +24,7 @@ param hasIdentity bool
 param userAssignedIdentityName string
 
 var sanitizedRevisionSuffix = substring(revisionSuffix, 0, 10)
+var useCustomRevisionSuffix = revisionMode == 'Multiple'
 
 resource uami 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' existing = {
   name: userAssignedIdentityName
@@ -73,7 +74,7 @@ resource containerApp 'Microsoft.App/containerApps@2022-03-01' = {
       }
     }
     template: {
-      revisionSuffix: sanitizedRevisionSuffix
+      revisionSuffix: useCustomRevisionSuffix ? sanitizedRevisionSuffix : null
       containers: [
         {
           image: containerImage

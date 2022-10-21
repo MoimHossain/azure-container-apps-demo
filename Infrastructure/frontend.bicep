@@ -3,23 +3,23 @@ param tagName string
 param containerRegistryName string = 'xenielscontainerregistry'
 param location string = resourceGroup().location
 param acaEnvName string = 'xeniel-aca-environment'
-param keyvaultName string = 'xeniels-keyvault-alpha'
+// param keyvaultName string = 'xeniels-keyvault-alpha'
 param uamiName string = 'xeniel-app-identity'
-param serviceBusNamespace string = 'xenielservicebus'
-param signalRName string = 'xenielsignalr'
-param signalRHubName string = 'xeniels'
+// param serviceBusNamespace string = 'xenielservicebus'
+// param signalRName string = 'xenielsignalr'
+// param signalRHubName string = 'xeniels'
 
-var appNameJobListener = 'xeniel-job-listener'
+//var appNameJobListener = 'xeniel-job-listener'
 var appNameFrontend = 'xeniel-frontend'
 
-var daprComponent_secretStore = 'xeniel-dapr-secret-store'
-var daprComponent_serviceBusPubSub = 'xeniel-dapr-servicebus-pubsub'
-var daprComponent_signalRBinding = 'xeniel-dapr-signalr-binding'
+// var daprComponent_secretStore = 'xeniel-dapr-secret-store'
+// var daprComponent_serviceBusPubSub = 'xeniel-dapr-servicebus-pubsub'
+// var daprComponent_signalRBinding = 'xeniel-dapr-signalr-binding'
 
 
 resource acaEnvironment 'Microsoft.App/managedEnvironments@2022-03-01'  existing = {   name: acaEnvName }
 resource uami 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' existing = { name: uamiName }
-resource serviceBus 'Microsoft.ServiceBus/namespaces@2022-01-01-preview' existing = { name: serviceBusNamespace }
+//resource serviceBus 'Microsoft.ServiceBus/namespaces@2022-01-01-preview' existing = { name: serviceBusNamespace }
 
 
 // module daprSecretStore 'modules/dapr/kv-secret-store.bicep' = {
@@ -92,7 +92,7 @@ module frontendApp 'modules/httpApp.bicep' = {
   params: {    
     location: location
     containerAppName: appNameFrontend
-    environmentName: acaEnvName
+    environmentName: acaEnvironment.name
     revisionMode: 'Multiple'
     revisionSuffix: tagName
     hasIdentity: true
