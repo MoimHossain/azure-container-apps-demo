@@ -31,7 +31,7 @@ echo "TrafficSpec: $TrafficSpec"
 #// TRAFFIC_PLACEHOLDER
 
 
-sed -i 's/TRAFFIC_PLACEHOLDER/'$TrafficSpec'/g' ${PWD}/Infrastructure/frontend.bicep 
+sed -i 's/TRAFFIC_PLACEHOLDER/MOIHOSSAIN/g' ${PWD}/Infrastructure/frontend.bicep 
 
 
 cat ${PWD}/Infrastructure/frontend.bicep
