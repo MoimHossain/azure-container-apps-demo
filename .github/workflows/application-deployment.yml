@@ -11,8 +11,8 @@ on:
         - info
         - warning
         - debug
-  push:
-    branches: [ main ]
+  # push:
+  #   branches: [ main ]
   # pull_request:
   #   branches: [ main ]
 
