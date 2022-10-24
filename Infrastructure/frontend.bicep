@@ -1,4 +1,9 @@
 targetScope = 'resourceGroup'
+
+
+param latestRevisionName string
+param previousRevisionName string
+
 param tagName string  = 'b6c5b4cfda45df1fde1876691b4330b80a688fa3'
 param containerRegistryName string = 'xenielscontainerregistry'
 param location string = resourceGroup().location
@@ -18,14 +23,18 @@ module frontendApp 'modules/httpApp.bicep' = {
     containerAppName: appNameFrontend
     environmentName: acaEnvironment.name    
     revisionMode: 'Multiple'    
-    trafficDistribution: [
+    trafficDistribution: [         
+      {           
+          revisionName: previousRevisionName
+          weight: 80
+      }
       {
-        revisionName: '${appNameFrontend}--${revisionSUffix}'
-        weight: 0
+          revisionName: latestRevisionName
+          label: 'latest'
+          weight: 20
       }
     ]
-    // TRAFFIC_PLACEHOLDER
-    revisionSuffix: tagName
+    revisionSuffix: revisionSUffix
     hasIdentity: true
     userAssignedIdentityName: uami.name
     containerImage: '${containerRegistryName}.azurecr.io/frontend:${tagName}'
