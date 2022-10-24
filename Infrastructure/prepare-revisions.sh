@@ -22,10 +22,15 @@ cat $GITHUB_ENV
 
 sed 's/PREV/'$previousRevisionName'/g;s/NEXT/'$nextRevisionName'/g' ${PWD}/Infrastructure/ts.template > ${PWD}/Infrastructure/ts.tmp
 sed "s/\"/'/g" ${PWD}/Infrastructure/ts.tmp > ${PWD}/Infrastructure/ts.json
-cat ${PWD}/Infrastructure/ts.json
+# cat ${PWD}/Infrastructure/ts.json
 
 TrafficSpec=$(cat ${PWD}/Infrastructure/ts.json)
 
 echo "TrafficSpec: $TrafficSpec"
 
 #// TRAFFIC_PLACEHOLDER
+
+sed -i 's/TRAFFIC_PLACEHOLDER/'$TrafficSpec'/g' ${PWD}/Infrastructure/frontend.bicep 
+
+echo "Bicep file updated"
+cat ${PWD}/Infrastructure/frontend.bicep
