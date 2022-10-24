@@ -24,6 +24,7 @@ module frontendApp 'modules/httpApp.bicep' = {
         weight: 0
       }
     ]
+    // TRAFFIC_PLACEHOLDER
     revisionSuffix: tagName
     hasIdentity: true
     userAssignedIdentityName: uami.name
