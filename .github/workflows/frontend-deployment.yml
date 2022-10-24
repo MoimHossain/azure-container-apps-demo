@@ -135,4 +135,22 @@ jobs:
           template: ./Infrastructure/frontend100.bicep
           parameters: 'tagName=${{ steps.tag.outputs.tag }}'          
       - name: Azure logout
-        run: az logout        
+        run: az logout 
+  deactivate-older-revision:
+    runs-on: ubuntu-latest
+    needs: triffic-load-100-percent
+    steps:      
+      - uses: actions/checkout@v2
+      - uses: tenhaus/get-release-or-tag@v2
+        id: tag      
+      - name: OIDC Login to Azure 
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }} 
+          enable-AzPSSession: false
+      - name: Deactivate old Revisions
+        run: ${PWD}/Infrastructure/deactivate-prev-revision.sh
+      - name: Azure logout
+        run: az logout
