@@ -14,9 +14,10 @@ echo 'Previous revision name: ' $previousRevisionName
 echo 'Next revision name: ' $nextRevisionName
 
 
+echo "{AZCAP_PREV_REV}={$previousRevisionName}" >> $GITHUB_ENV
+echo "{AZCAP_NEXT_REV}={$nextRevisionName}" >> $GITHUB_ENV
+
 
 sed 's/PREV/'$previousRevisionName'/g;s/NEXT/'$nextRevisionName'/g' ${PWD}/Infrastructure/ts.template > ${PWD}/Infrastructure/ts.tmp
 sed "s/\"/'/g" ${PWD}/Infrastructure/ts.tmp > ${PWD}/Infrastructure/ts.json
-
-
 cat ${PWD}/Infrastructure/ts.json
