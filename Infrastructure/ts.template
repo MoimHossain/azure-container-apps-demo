@@ -1,4 +1,4 @@
-traffic: [         
+trafficDistribution: [         
     {           
         revisionName: PREV
         weight: 80
