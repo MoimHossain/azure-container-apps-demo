@@ -23,6 +23,13 @@ param revisionMode string = 'Single'
 param hasIdentity bool
 param userAssignedIdentityName string
 
+param trafficDistribution array = [
+  {
+    latestRevision: true
+    weight: 100
+  }
+]
+
 var sanitizedRevisionSuffix = substring(revisionSuffix, 0, 10)
 var useCustomRevisionSuffix = revisionMode == 'Multiple'
 
@@ -60,12 +67,7 @@ resource containerApp 'Microsoft.App/containerApps@2022-03-01' = {
         external: isExternalIngress
         targetPort: containerPort
         transport: 'auto'
-        traffic: [
-          {
-            latestRevision: true
-            weight: 100
-          }
-        ]
+        traffic: trafficDistribution
       } : null
       dapr: {
         enabled: true

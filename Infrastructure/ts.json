@@ -1,0 +1,11 @@
+traffic: [         
+    {           
+        revisionName: 'xeniel-frontend--67433ec993'
+        weight: 100
+    }
+    {
+        revisionName: b6c5b4cfda
+        label: 'latest'
+        weight: 0
+    }
+]

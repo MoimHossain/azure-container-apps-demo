@@ -1,0 +1,11 @@
+traffic: [         
+    {           
+        revisionName: PREV
+        weight: 100
+    }
+    {
+        revisionName: NEXT
+        label: 'latest'
+        weight: 0
+    }
+]

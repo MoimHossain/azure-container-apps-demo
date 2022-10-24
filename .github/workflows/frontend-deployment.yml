@@ -1,0 +1,47 @@
+name: Frontend-Deployment
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+        type: choice
+        options:
+        - info
+        - warning
+        - debug
+  # push:
+  #   branches: [ main ]
+  # pull_request:
+  #   branches: [ main ]
+
+permissions:
+      id-token: write
+      contents: read
+    
+env:
+  AZURE_RESOURCE_GROUP: xeniel
+  AZURE_LOCATION: westeurope
+  AZURE_MANAGED_BY: "moim.hossain@microsoft.com"
+
+jobs:
+  build-container-images:    
+    runs-on: ubuntu-latest    
+    steps:      
+      - uses: actions/checkout@v2
+      - uses: tenhaus/get-release-or-tag@v2
+        id: tag      
+      - name: OIDC Login to Azure 
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }} 
+          enable-AzPSSession: false
+      - name: Prepare Revisions
+        run: ${PWD}/Infrastructure/fixer.sh $ImageTag
+        env:
+          ImageTag: ${{ steps.tag.outputs.tag }}          
+      - name: Azure logout
+        run: az logout       

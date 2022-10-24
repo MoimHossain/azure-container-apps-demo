@@ -1,5 +1,5 @@
 targetScope = 'resourceGroup'
-param tagName string
+param tagName string  = 'b6c5b4cfda45df1fde1876691b4330b80a688fa3'
 param containerRegistryName string = 'xenielscontainerregistry'
 param location string = resourceGroup().location
 param acaEnvName string = 'xeniel-aca-environment'
@@ -94,6 +94,12 @@ module frontendApp 'modules/httpApp.bicep' = {
     containerAppName: appNameFrontend
     environmentName: acaEnvironment.name
     revisionMode: 'Multiple'
+    trafficDistribution: [
+      {
+        revisionName: '${appNameFrontend}--b6c5b4cfda'
+        weight: 0
+      }
+    ]
     revisionSuffix: tagName
     hasIdentity: true
     userAssignedIdentityName: uami.name
