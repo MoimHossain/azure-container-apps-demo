@@ -15,8 +15,8 @@ echo 'Next revision name: ' $nextRevisionName
 
 
 
-sed 's/PREV/'$previousRevisionName'/g;s/NEXT/'$nextRevisionName'/g' ./ts.template > ./ts.tmp
-sed "s/\"/'/g" ./ts.tmp > ./ts.json
+sed 's/PREV/'$previousRevisionName'/g;s/NEXT/'$nextRevisionName'/g' ${PWD}/Infrastructure/ts.template > ${PWD}/Infrastructure/ts.tmp
+sed "s/\"/'/g" ${PWD}/Infrastructure/ts.tmp > ${PWD}/Infrastructure/ts.json
 
 
-cat ./ts.json
+cat ${PWD}/Infrastructure/ts.json
