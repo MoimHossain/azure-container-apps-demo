@@ -1,11 +1,11 @@
 traffic: [         
     {           
         revisionName: PREV
-        weight: 100
+        weight: 80
     }
     {
         revisionName: NEXT
         label: 'latest'
-        weight: 0
+        weight: 20
     }
 ]
