@@ -1,7 +1,8 @@
 #!/bin/bash
 COMMITHASH=$1
+FileName=$2
 
-echo "Starting script...Commit Hash received $COMMITHASH"
+echo "Starting script...Commit Hash received $COMMITHASH and file name $FileName"
 az config set extension.use_dynamic_install=yes_without_prompt
 az extension add -n containerapp
 
@@ -12,30 +13,8 @@ prevNameWithoutQuites=$(echo $previousRevisionName | tr -d "\"")        # using 
 echo 'Previous revision name: ' $prevNameWithoutQuites
 echo 'Next revision name: ' $nextRevisionName
 
-# az deployment group create \ 
-#    --resource-group xeniel \
-#    --template-file frontend.bicep \
-#    --parameters tagName="$COMMITHASH" latestRevisionName="$nextRevisionName" previousRevisionName="$prevNameWithoutQuites"
+sed -i "s/PREV/$prevNameWithoutQuites/g" ${PWD}/Infrastructure/$FileName.bicep 
+sed -i "s/NEXT/$nextRevisionName/g" ${PWD}/Infrastructure/$FileName.bicep 
 
 
-
-
-# echo "{AZCAP_PREV_REV}={$previousRevisionName}" >> $GITHUB_ENV
-# echo "{AZCAP_NEXT_REV}={$nextRevisionName}" >> $GITHUB_ENV
-# echo "$GITHUB_ENV"
-# cat $GITHUB_ENV
-
-
-# sed 's/PREV/'$previousRevisionName'/g;s/NEXT/'$nextRevisionName'/g' ${PWD}/Infrastructure/ts.template > ${PWD}/Infrastructure/ts.tmp
-# sed "s/\"/'/g" ${PWD}/Infrastructure/ts.tmp > ${PWD}/Infrastructure/ts.json
-# cat ${PWD}/Infrastructure/ts.json
-
-# TrafficSpec=$(cat ${PWD}/Infrastructure/ts.json)
-
-# echo "TrafficSpec: $TrafficSpec"
-
-sed -i "s/PREV/$prevNameWithoutQuites/g" ${PWD}/Infrastructure/frontend.bicep 
-sed -i "s/NEXT/$nextRevisionName/g" ${PWD}/Infrastructure/frontend.bicep 
-
-
-cat ${PWD}/Infrastructure/frontend.bicep
+cat ${PWD}/Infrastructure/$FileName.bicep
