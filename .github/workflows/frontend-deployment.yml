@@ -106,7 +106,7 @@ jobs:
           parameters: 'tagName=${{ steps.tag.outputs.tag }}'          
       - name: Azure logout
         run: az logout
-  triffic-load-150-percent:
+  triffic-load-100-percent:
     runs-on: ubuntu-latest
     needs: triffic-load-50-percent
     steps:      

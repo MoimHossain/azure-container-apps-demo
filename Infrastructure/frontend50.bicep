@@ -22,12 +22,12 @@ module frontendApp 'modules/httpApp.bicep' = {
     trafficDistribution: [         
       {           
           revisionName: 'PREV'
-          weight: 80
+          weight: 50
       }
       {
           revisionName: 'NEXT'
           label: 'latest'
-          weight: 20
+          weight: 50
       }
     ]
     revisionSuffix: revisionSUffix
