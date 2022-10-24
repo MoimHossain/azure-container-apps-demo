@@ -30,7 +30,7 @@ echo "TrafficSpec: $TrafficSpec"
 
 #// TRAFFIC_PLACEHOLDER
 
-sed -i 's/TRAFFIC_PLACEHOLDER/$TrafficSpec/g' ${PWD}/Infrastructure/frontend.bicep 
+sed -i "s/TRAFFIC_PLACEHOLDER/$TrafficSpec/g" ${PWD}/Infrastructure/frontend.bicep 
 
 echo "Bicep file updated"
 cat ${PWD}/Infrastructure/frontend.bicep
