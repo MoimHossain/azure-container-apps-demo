@@ -1,10 +1,6 @@
 targetScope = 'resourceGroup'
 
-
-param latestRevisionName string
-param previousRevisionName string
-
-param tagName string  = 'b6c5b4cfda45df1fde1876691b4330b80a688fa3'
+param tagName string
 param containerRegistryName string = 'xenielscontainerregistry'
 param location string = resourceGroup().location
 param acaEnvName string = 'xeniel-aca-environment'
@@ -25,11 +21,11 @@ module frontendApp 'modules/httpApp.bicep' = {
     revisionMode: 'Multiple'    
     trafficDistribution: [         
       {           
-          revisionName: previousRevisionName
+          revisionName: 'PREV'
           weight: 80
       }
       {
-          revisionName: latestRevisionName
+          revisionName: 'NEXT'
           label: 'latest'
           weight: 20
       }

@@ -9,13 +9,13 @@ nextRevisionName="xeniel-frontend--${COMMITHASH:0:10}"
 previousRevisionName=$(az containerapp revision list -n xeniel-frontend -g xeniel --query '[0].name')
 
 prevNameWithoutQuites=$(echo $previousRevisionName | tr -d "\"")        # using sed echo $pname | sed "s/\"//g"
-echo 'Previous revision name: ' $previousRevisionName
+echo 'Previous revision name: ' $prevNameWithoutQuites
 echo 'Next revision name: ' $nextRevisionName
 
-az deployment group create \ 
-   --resource-group xeniel \
-   --template-file frontend.bicep \
-   --parameters tagName="$COMMITHASH" latestRevisionName="$nextRevisionName" previousRevisionName="$prevNameWithoutQuites"
+# az deployment group create \ 
+#    --resource-group xeniel \
+#    --template-file frontend.bicep \
+#    --parameters tagName="$COMMITHASH" latestRevisionName="$nextRevisionName" previousRevisionName="$prevNameWithoutQuites"
 
 
 
@@ -34,7 +34,8 @@ az deployment group create \
 
 # echo "TrafficSpec: $TrafficSpec"
 
-# sed -i "s/TRAFFIC_PLACEHOLDER/MOIHOSSAIN/g" ${PWD}/Infrastructure/frontend.bicep 
+sed -i "s/PREV/$prevNameWithoutQuites/g" ${PWD}/Infrastructure/frontend.bicep 
+sed -i "s/NEXT/$nextRevisionName/g" ${PWD}/Infrastructure/frontend.bicep 
 
 
-# cat ${PWD}/Infrastructure/frontend.bicep
+cat ${PWD}/Infrastructure/frontend.bicep
