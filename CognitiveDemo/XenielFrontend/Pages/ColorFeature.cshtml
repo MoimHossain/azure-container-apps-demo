@@ -1,0 +1,22 @@
+﻿@page 
+@{
+    Layout = null;
+}
+@model XenielFrontend.Pages.ColorFeatureModel
+
+
+<div id="rootDiv" style="width: 100%; height: 100%">&nbsp;</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        window.setInterval(function() {
+            fetch('/color')
+                .then(response => response.json())
+                .then(data => $(rootDiv).css("background", data.color));
+        }, 1000);
+
+    });
+ </script>
