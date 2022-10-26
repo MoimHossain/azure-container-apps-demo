@@ -28,13 +28,18 @@ app.MapControllers();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapHub<XenielHub>("/xeniel");
-
-    endpoints.MapGet("/color", async c => { await c.Response.WriteAsync(JsonSerializer.Serialize(new { color = "#00FF00" })); });
-
     endpoints.MapPost("/notify", async c => {
-        var resultObject = await c.Request.ReadFromJsonAsync<ImageAnalysis>();        
+        var resultObject = await c.Request.ReadFromJsonAsync<ImageAnalysis>();
         var hubContext = endpoints.ServiceProvider.GetRequiredService<IHubContext<XenielHub>>();
         await hubContext.Clients.All.SendAsync("broadcastMessage", resultObject);
+    });
+
+
+    endpoints.MapGet("/color", async c => { await c.Response.WriteAsync(JsonSerializer.Serialize(new { color = "#00FF00" })); });    
+
+    endpoints.MapGet("/health", async c => { 
+        throw new InvalidOperationException("An error has occured");
+        await c.Response.WriteAsync(JsonSerializer.Serialize(new { success = true }));
     });
 });
 
