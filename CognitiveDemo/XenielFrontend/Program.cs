@@ -2,10 +2,9 @@
 
 using Azure.Storage.Blobs;
 using Dapr.Client;
-using Google.Api;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
+using System.Text.Json;
 using XenielFrontend;
 
 using var daprClient = new DaprClientBuilder().Build();
@@ -30,7 +29,7 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapHub<XenielHub>("/xeniel");
 
-    endpoints.MapGet("/color", async c => { await c.Response.WriteAsync(System.Text.Json.JsonSerializer.Serialize(new { color = "#00FF00" })); });
+    endpoints.MapGet("/color", async c => { await c.Response.WriteAsync(JsonSerializer.Serialize(new { color = "#00FF00" })); });
 
     endpoints.MapPost("/notify", async c => {
         var resultObject = await c.Request.ReadFromJsonAsync<ImageAnalysis>();        
