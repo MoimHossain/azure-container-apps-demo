@@ -94,7 +94,7 @@ jobs:
 
   triffic-load-50-percent:
     runs-on: ubuntu-latest
-    needs: health-check
+    needs: healthcheck
     steps:      
       - uses: actions/checkout@v2
       - run: echo "STATS CODE =====================================> ${{needs.healthcheck.outputs.status_code}}"
