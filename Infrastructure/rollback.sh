@@ -18,3 +18,6 @@ az containerapp revision label add -g xeniel --label latest --revision $prevName
 
 echo "Deactovating the $nextRevisionName revision"
 az containerapp revision deactivate -g xeniel --revision $nextRevisionName
+
+echo "Restoring traffic 100 to older revision"
+az containerapp ingress traffic set -n xeniel-frontend -g xeniel --revision-weight $prevNameWithoutQuites=100
