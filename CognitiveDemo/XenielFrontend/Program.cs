@@ -35,10 +35,10 @@ app.UseEndpoints(endpoints =>
     });
 
 
-    endpoints.MapGet("/color", async c => { await c.Response.WriteAsync(JsonSerializer.Serialize(new { color = "#00FF00" })); });    
+    endpoints.MapGet("/color", async c => { await c.Response.WriteAsync(JsonSerializer.Serialize(new { color = "#0000FF" })); });    
 
     endpoints.MapGet("/health", async c => { 
-        throw new InvalidOperationException("An error has occured");
+        //throw new InvalidOperationException("An error has occured");
         await c.Response.WriteAsync(JsonSerializer.Serialize(new { success = true }));
     });
 });
