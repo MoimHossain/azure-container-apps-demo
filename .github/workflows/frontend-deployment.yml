@@ -76,11 +76,28 @@ jobs:
           parameters: 'tagName=${{ steps.tag.outputs.tag }}'          
       - name: Azure logout
         run: az logout
-  triffic-load-50-percent:
+
+  healthcheck:
     runs-on: ubuntu-latest
-    needs: deploy-frontend-images
+    needs: build-frontend-image
+    outputs:
+      status_code: ${{ steps.healthcheckStep.outputs.status_code }}      
     steps:      
       - uses: actions/checkout@v2
+      - uses: tenhaus/get-release-or-tag@v2
+        id: tag
+      - name: Check Health API
+        id: healthcheckStep
+        run: ${PWD}/Infrastructure/health-check.sh $ImageTag
+        env:
+          ImageTag: ${{ steps.tag.outputs.tag }}
+
+  triffic-load-50-percent:
+    runs-on: ubuntu-latest
+    needs: health-check
+    steps:      
+      - uses: actions/checkout@v2
+      - run: echo "STATS CODE =====================================> ${{needs.healthcheck.outputs.status_code}}"
       - uses: tenhaus/get-release-or-tag@v2
         id: tag      
       - name: OIDC Login to Azure 
