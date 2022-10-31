@@ -88,7 +88,7 @@ function updateView(data) {
             if (category.detail && category.detail.celebrities && category.detail.celebrities.length > 0) {
                 var values = [];
                 category.detail.celebrities.forEach(celeb => {
-                    values.push('<span>' + celeb.Name + ' </span> <span class="badge bg-info text-light">' + celeb.confidence + ' Confidence </span>');
+                    values.push('<span>' + celeb.name + ' </span> <span class="badge bg-info text-light">' + celeb.confidence + ' Confidence </span>');
                 });
                 rows.push('<tr><td class="table-active">Celebrity Indication</td><td>' + values.join('&nbsp;') + '</td></tr>')
             }
