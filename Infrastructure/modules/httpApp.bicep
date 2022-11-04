@@ -63,12 +63,12 @@ resource containerApp 'Microsoft.App/containerApps@2022-03-01' = {
           passwordSecretRef: useManagedIdentityForImagePull ? null : registryPassword
         }
       ] : null
-      ingress: enableIngress ? {
+      ingress: {
         external: isExternalIngress
         targetPort: containerPort
         transport: 'auto'
         traffic: trafficDistribution
-      } : null
+      }
       dapr: {
         enabled: true
         appPort: containerPort
