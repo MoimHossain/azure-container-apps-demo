@@ -48,7 +48,8 @@ resource roleAssignmentForSystemIdentity 'Microsoft.Authorization/roleAssignment
 
 
 resource eventgridTopicSubscription 'Microsoft.EventGrid/systemTopics/eventSubscriptions@2022-06-15' = {
-  name: '${eventGridSystemTopic.name}/xenielsubscription'
+  parent: eventGridSystemTopic
+  name: 'xenielsubscription'
   properties: {
     eventDeliverySchema: 'CloudEventSchemaV1_0'
     destination: {

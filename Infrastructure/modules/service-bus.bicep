@@ -21,10 +21,8 @@ resource sbNamespace 'Microsoft.ServiceBus/namespaces@2022-01-01-preview' = {
 }
 
 resource topic 'Microsoft.ServiceBus/namespaces/topics@2022-01-01-preview' = {
-  name: '${serviceBusNamespace}/${serviceBusTopicName}'
-  dependsOn: [
-   sbNamespace 
-  ]
+  parent: sbNamespace
+  name: serviceBusTopicName
   properties: {
     maxMessageSizeInKilobytes: 256
     defaultMessageTimeToLive: 'P14D'
@@ -68,10 +66,8 @@ resource roleAssignmentSbDataOwner 'Microsoft.Authorization/roleAssignments@2022
 }
 
 resource authRules 'Microsoft.ServiceBus/namespaces/AuthorizationRules@2022-01-01-preview' = {
-  dependsOn: [
-    sbNamespace
-  ]
-  name: '${serviceBusNamespace}/RootManageSharedAccessKey'
+  parent: sbNamespace
+  name: 'RootManageSharedAccessKey'
   properties: {
     rights: [
       'Listen'
@@ -82,10 +78,8 @@ resource authRules 'Microsoft.ServiceBus/namespaces/AuthorizationRules@2022-01-0
 }
 
 resource networkRuleSets 'Microsoft.ServiceBus/namespaces/networkRuleSets@2022-01-01-preview' = {
-  name: '${serviceBusNamespace}/default'
-  dependsOn: [
-    sbNamespace
-  ]
+  parent: sbNamespace
+  name: 'default'
   properties: {
     publicNetworkAccess: 'Enabled'
     defaultAction: 'Allow'
@@ -101,11 +95,8 @@ resource networkRuleSets 'Microsoft.ServiceBus/namespaces/networkRuleSets@2022-0
 
 
 resource subscription 'Microsoft.ServiceBus/namespaces/topics/subscriptions@2022-01-01-preview' = {
-  name: '${serviceBusNamespace}/${serviceBusTopicName}/${serviceBusTopicSubName}'
-  dependsOn: [
-    topic
-    sbNamespace
-  ]
+  parent: topic
+  name: serviceBusTopicSubName
   properties: {
     isClientAffine: false
     lockDuration: 'PT1M'
