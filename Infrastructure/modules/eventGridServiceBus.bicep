@@ -6,7 +6,7 @@ param serviceBusNamespace string
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2022-05-01' existing = { name: storageAccountName }
 resource serviceBus 'Microsoft.ServiceBus/namespaces@2022-01-01-preview' existing = { name: serviceBusNamespace }
-resource topic 'Microsoft.ServiceBus/namespaces/topics@2022-01-01-preview' existing = { name: '${serviceBusNamespace}/${serviceBusTopicName}' }
+resource topic 'Microsoft.ServiceBus/namespaces/topics@2022-01-01-preview' existing = { parent: serviceBus, name: serviceBusTopicName}
 
 
 resource eventGridSystemTopic 'Microsoft.EventGrid/systemTopics@2022-06-15' = {

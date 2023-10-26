@@ -65,15 +65,35 @@ resource roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   }
 }
 
-resource mainstoragecontainer 'Microsoft.Storage/storageAccounts/blobServices/containers@2021-02-01' = {
-  name: '${mainstorage.name}/default/${containerName}'
+resource defaultFileService 'Microsoft.Storage/storageAccounts/fileServices@2023-01-01' = {
+  parent: mainstorage
+  name: 'default'
 }
 
+resource defaultQueueService 'Microsoft.Storage/storageAccounts/queueServices@2023-01-01' = {
+  parent: mainstorage
+  name: 'default'
+}
+
+resource defaultTableService 'Microsoft.Storage/storageAccounts/tableServices@2023-01-01' = {
+  parent: mainstorage
+  name: 'default'
+}
+
+resource defaultBlobService 'Microsoft.Storage/storageAccounts/blobServices@2023-01-01' = {
+  parent: mainstorage
+  name: 'default'
+}
+
+resource blobContainer 'Microsoft.Storage/storageAccounts/blobServices/containers@2023-01-01' = {
+  parent: defaultBlobService
+  name: containerName
+}
+
+
 resource storageQueue 'Microsoft.Storage/storageAccounts/queueServices/queues@2022-05-01' = {
-  name: '${mainstorage.name}/default/${queueName}'
-  properties: {
-    metadata: {}
-  }
+  parent: defaultQueueService
+  name: queueName
 }
 
 
