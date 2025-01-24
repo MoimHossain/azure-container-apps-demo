@@ -22,6 +22,7 @@ permissions:
     
 env:
   AZURE_RESOURCE_GROUP: xeniel
+  AZURE_CONTAINER_APP: xeniel-frontend
   AZURE_LOCATION: westeurope
   AZURE_MANAGED_BY: "moim.hossain@microsoft.com"
 
@@ -61,10 +62,12 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }} 
           enable-AzPSSession: false
       - name: Prepare Revisions
-        run: ${PWD}/Infrastructure/prepare-revisions.sh $ImageTag $FileName
+        run: ${PWD}/Infrastructure/prepare-revisions.sh $ImageTag $FileName $RG $APP
         env:
           ImageTag: ${{ steps.tag.outputs.tag }}
           FileName: "frontend.bicep"
+          RG: ${{ env.AZURE_RESOURCE_GROUP }}
+          APP: ${{ env.AZURE_CONTAINER_APP }}           
 
       - name: Deploy Bicep Template
         uses: Azure/arm-deploy@main
@@ -88,9 +91,11 @@ jobs:
         id: tag
       - name: Check Health API
         id: healthcheckStep
-        run: ${PWD}/Infrastructure/health-check.sh $ImageTag
+        run: ${PWD}/Infrastructure/health-check.sh $ImageTag $RG $APP
         env:
           ImageTag: ${{ steps.tag.outputs.tag }}
+          RG: ${{ env.AZURE_RESOURCE_GROUP }}
+          APP: ${{ env.AZURE_CONTAINER_APP }}          
 
   rollback:
     runs-on: ubuntu-latest
@@ -108,9 +113,11 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }} 
           enable-AzPSSession: false
       - name: Rollback and Deactivate faulty revision
-        run: ${PWD}/Infrastructure/rollback.sh $ImageTag
+        run: ${PWD}/Infrastructure/rollback.sh $ImageTag $RG $APP
         env:
           ImageTag: ${{ steps.tag.outputs.tag }}
+          RG: ${{ env.AZURE_RESOURCE_GROUP }}
+          APP: ${{ env.AZURE_CONTAINER_APP }}
       - name: Azure logout
         run: az logout          
 
@@ -130,10 +137,12 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }} 
           enable-AzPSSession: false
       - name: Prepare Revisions
-        run: ${PWD}/Infrastructure/prepare-revisions.sh $ImageTag $FileName
+        run: ${PWD}/Infrastructure/prepare-revisions.sh $ImageTag $FileName $RG $APP
         env:
           ImageTag: ${{ steps.tag.outputs.tag }}
           FileName: "frontend50.bicep"
+          RG: ${{ env.AZURE_RESOURCE_GROUP }}
+          APP: ${{ env.AZURE_CONTAINER_APP }}           
 
       - name: Deploy Bicep Template
         uses: Azure/arm-deploy@main
@@ -160,10 +169,12 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }} 
           enable-AzPSSession: false
       - name: Prepare Revisions
-        run: ${PWD}/Infrastructure/prepare-revisions.sh $ImageTag $FileName
+        run: ${PWD}/Infrastructure/prepare-revisions.sh $ImageTag $FileName $RG $APP
         env:
           ImageTag: ${{ steps.tag.outputs.tag }}
           FileName: "frontend100.bicep"
+          RG: ${{ env.AZURE_RESOURCE_GROUP }}
+          APP: ${{ env.AZURE_CONTAINER_APP }}           
 
       - name: Deploy Bicep Template
         uses: Azure/arm-deploy@main
@@ -190,6 +201,10 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }} 
           enable-AzPSSession: false
       - name: Deactivate old Revisions
-        run: ${PWD}/Infrastructure/deactivate-prev-revision.sh
+        run: ${PWD}/Infrastructure/deactivate-prev-revision.sh $RG $APP
+        env:
+          ImageTag: ${{ steps.tag.outputs.tag }}
+          RG: ${{ env.AZURE_RESOURCE_GROUP }}
+          APP: ${{ env.AZURE_CONTAINER_APP }}        
       - name: Azure logout
         run: az logout
