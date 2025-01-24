@@ -17,7 +17,7 @@ on:
   #   branches: [ main ]
 
 permissions:
-      id-token: write
+      id-token: write # Require write permission to Fetch an OIDC token.
       contents: read
     
 env:
@@ -34,7 +34,7 @@ jobs:
       - uses: actions/checkout@v2
       
       - name: OIDC Login to Azure 
-        uses: azure/login@v1
+        uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
@@ -42,8 +42,9 @@ jobs:
           enable-AzPSSession: false
 
       - name: Provision Resource Group
-        uses: Azure/cli@v1
+        uses: azure/cli@v2
         with:
+          azcliversion: latest
           inlineScript: az group create --name ${{ env.AZURE_RESOURCE_GROUP }} --location ${{ env.AZURE_LOCATION }} --tags Purpose=Demo Production=NO --managed-by ${{ env.AZURE_MANAGED_BY }}
 
       - name: Deploy Bicep Template
