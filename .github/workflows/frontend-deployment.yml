@@ -33,7 +33,7 @@ jobs:
       - uses: tenhaus/get-release-or-tag@v2
         id: tag      
       - name: OIDC Login to Azure 
-        uses: azure/login@v1
+        uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
@@ -101,7 +101,7 @@ jobs:
       - uses: tenhaus/get-release-or-tag@v2
         id: tag      
       - name: OIDC Login to Azure 
-        uses: azure/login@v1
+        uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
@@ -123,7 +123,7 @@ jobs:
       - uses: tenhaus/get-release-or-tag@v2
         id: tag      
       - name: OIDC Login to Azure 
-        uses: azure/login@v1
+        uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
@@ -153,7 +153,7 @@ jobs:
       - uses: tenhaus/get-release-or-tag@v2
         id: tag      
       - name: OIDC Login to Azure 
-        uses: azure/login@v1
+        uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
