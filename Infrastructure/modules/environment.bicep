@@ -11,10 +11,7 @@ resource logAnalytics 'Microsoft.OperationalInsights/workspaces@2022-10-01' exis
 
 resource environment 'Microsoft.App/managedEnvironments@2022-03-01' = {
   name: envrionmentName
-  location: location  
-  dependsOn: [
-    logAnalytics
-  ]
+  location: location
   properties: {
     daprAIInstrumentationKey: appInsightKey //appInsights.properties.InstrumentationKey
 

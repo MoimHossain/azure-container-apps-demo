@@ -109,10 +109,6 @@ module storageAccount 'modules/storageAccount.bicep' = {
 var eventGridTopicName = '${storageAccountName}-${serviceBusTopicName}-topic'
 module eventgridTopicToServiceBus 'modules/eventGridServiceBus.bicep' = {
   name: eventGridTopicName
-  dependsOn: [
-    serviceBus
-    storageAccount
-  ]
   params: {
     eventGridSystemTopicName: eventGridTopicName 
     location: location
