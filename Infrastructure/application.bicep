@@ -3,7 +3,7 @@ param tagName string
 param containerRegistryName string = 'xenielscontainerregistry'
 param location string = resourceGroup().location
 param acaEnvName string = 'xeniel-aca-environment'
-param keyvaultName string = 'xeniels-keyvault-alpha'
+param keyvaultName string = 'xeniels-keyvault-v1'
 param uamiName string = 'xeniel-app-identity'
 param serviceBusNamespace string = 'xenielservicebus'
 param signalRName string = 'xenielsignalr'
