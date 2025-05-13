@@ -1,9 +1,11 @@
 @description('Name of the Azure Container App environment')
 param envrionmentName string
 param location string = resourceGroup().location
+@secure()
 param appInsightKey string
 
 param laWorkspaceName string
+
 
 resource logAnalytics 'Microsoft.OperationalInsights/workspaces@2022-10-01' existing = {
   name: laWorkspaceName
