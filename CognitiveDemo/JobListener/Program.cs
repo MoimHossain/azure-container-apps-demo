@@ -5,7 +5,6 @@ using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 using var daprClient = new DaprClientBuilder().Build();
