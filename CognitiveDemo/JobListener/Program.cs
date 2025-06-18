@@ -6,6 +6,12 @@ using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 
+// Configure the web server to listen on port 80 when in a container
+if (builder.Environment.IsProduction() || Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true")
+{
+    builder.WebHost.UseUrls("http://*:80");
+}
+
 var app = builder.Build();
 using var daprClient = new DaprClientBuilder().Build();
 

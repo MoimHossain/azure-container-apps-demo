@@ -1,5 +1,3 @@
-
-
 using Azure.Storage.Blobs;
 using Dapr.Client;
 using Microsoft.AspNetCore.SignalR;
@@ -10,6 +8,11 @@ using XenielFrontend;
 using var daprClient = new DaprClientBuilder().Build();
 var builder = WebApplication.CreateBuilder(args);
 
+// Configure the web server to listen on port 80 when in a container
+if (builder.Environment.IsProduction() || Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true")
+{
+    builder.WebHost.UseUrls("http://*:80");
+}
 
 builder.Services.AddRazorPages();
 builder.Services.AddSignalR().AddAzureSignalR(await daprClient
