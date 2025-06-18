@@ -15,11 +15,11 @@ param serviceBusTopicName string = 'xeniel-tpic'
 param serviceBusTopicSubName string = 'xeniel-tpic-frontend'
 param signalRName string = 'xenielsignalr'
 
-param keyvaultName string = 'xeniels-keyvault-v1'
+param keyvaultName string = 'xeniels-keyvault-v2'
 param uamiName string = 'xeniel-app-identity'
 param signalRKeyName string = 'SignalRConnectionString'
 
-param computerVisionAccountName string = 'xenielscomputvision'
+param computerVisionAccountName string = 'xenielscomputvisionv0'
 param KV_CVAccountKyName string = 'ComputerVisionKey'
 param KV_CVAccountEdnpointName string = 'ComputerVisionEdnpoint'
 
