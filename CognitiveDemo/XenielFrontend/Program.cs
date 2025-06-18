@@ -28,22 +28,22 @@ app.MapRazorPages();
 app.MapControllers();
 
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapHub<XenielHub>("/xeniel");
-    endpoints.MapPost("/notify", async c => {
-        var resultObject = await c.Request.ReadFromJsonAsync<ImageAnalysis>();
-        var hubContext = endpoints.ServiceProvider.GetRequiredService<IHubContext<XenielHub>>();
-        await hubContext.Clients.All.SendAsync("broadcastMessage", resultObject);
-    });
 
 
-    endpoints.MapGet("/color", async c => { await c.Response.WriteAsync(JsonSerializer.Serialize(new { color = "#0000FF" })); });    
 
-    endpoints.MapGet("/health", async c => { 
-        //throw new InvalidOperationException("An error has occured");
-        await c.Response.WriteAsync(JsonSerializer.Serialize(new { success = true }));
-    });
+app.MapHub<XenielHub>("/xeniel");
+app.MapPost("/notify", async c => {
+    var resultObject = await c.Request.ReadFromJsonAsync<ImageAnalysis>();
+    var hubContext = c.RequestServices.GetRequiredService<IHubContext<XenielHub>>();
+    await hubContext.Clients.All.SendAsync("broadcastMessage", resultObject);
+});
+
+
+app.MapGet("/color", async c => { await c.Response.WriteAsync(JsonSerializer.Serialize(new { color = "#0000FF" })); });
+
+app.MapGet("/health", async c => {
+    //throw new InvalidOperationException("An error has occured");
+    await c.Response.WriteAsync(JsonSerializer.Serialize(new { success = true }));
 });
 
 app.Run();
